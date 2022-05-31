@@ -32,5 +32,6 @@ if not exist fftw-3.3.5-dll64 (
     lib /def:libfftw3f-3.def /MACHINE:x64
 )
 set "FFTW3_LIBRARIES=%CS_DEPS%/fftw-3.3.5-dll64/libfftw3f-3.lib"
+set "FFTW3_INCLUDE_DIR=%CS_DEPS%/fftw-3.3.5-dll64/"
 
 cd %CS_ROOT%

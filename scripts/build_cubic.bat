@@ -20,10 +20,16 @@ if not exist CubicSDR (
 cd %CS_TARGET%
 if not exist CubicSDR (
     mkdir CubicSDR
-    cd CubicSDR
-    cmake -G %CS_GENERATOR% -A x64 %BUILD_ROOT%\sources\CubicSDR -DwxWidgets_ROOT_DIR:String=%WXWIDGETS_ROOT_DIR% -DCMAKE_INSTALL_PREFIX:PATH=%CS_INSTALL%/SoapySDR -DSoapySDR_DIR:PATH=%CS_INSTALL%/SoapySDR
-    cmake --build . --config Release
-    @REM cmake --build . --config Release --target install
+    cmake -B CubicSDR -G %CS_GENERATOR% -A x64 %BUILD_ROOT%\sources\CubicSDR^
+        -DwxWidgets_ROOT_DIR:String=%WXWIDGETS_ROOT_DIR%^
+        -DCMAKE_INSTALL_PREFIX:PATH=%CS_INSTALL%/CubicSDR^
+        -DSoapySDR_DIR:PATH=%SOAPY_SDR_ROOT%/cmake^
+        -DSOAPY_SDR_ROOT:PATH=%SOAPY_SDR_ROOT%^
+        -DBUILD_INSTALLER=ON -DBUNDLE_SOAPY_MODS=ON
+    cmake --build CubicSDR --config Release --target install
 )
+
+cd CubicSDR
+cpack CubicSDR
 
 cd %CS_ROOT%

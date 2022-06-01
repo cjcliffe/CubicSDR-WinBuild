@@ -4,7 +4,7 @@ if not exist build (
     mkdir build
 )
 set "CS_ROOT=%CD%" 
-call set CS_ROOT=%%BUILD_ROOT:\=/%%
+call set CS_ROOT=%%CS_ROOT:\=/%%
 set "BUILD_ROOT=%CS_ROOT%/build"
 
 cd %BUILD_ROOT%

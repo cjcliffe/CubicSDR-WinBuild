@@ -8,7 +8,9 @@ if not exist SoapyAudio (
 cd %CS_TARGET%
 if not exist SoapyAudio (
     mkdir SoapyAudio
-    cmake -B SoapyAudio -G %CS_GENERATOR% -A x64 %CS_SOURCES%\SoapyAudio -DCMAKE_INSTALL_PREFIX:PATH=%CS_INSTALL%/SoapySDR -DSoapySDR_DIR:PATH=%CS_INSTALL%/SoapySDR
+    cmake -B SoapyAudio -G %CS_GENERATOR% -A x64 %CS_SOURCES%\SoapyAudio^
+        -DCMAKE_INSTALL_PREFIX:PATH=%CS_INSTALL%/SoapySDR^
+        -DSoapySDR_DIR:PATH=%CS_INSTALL%/SoapySDR
     cmake --build SoapyAudio --config Release --target install
 )
 

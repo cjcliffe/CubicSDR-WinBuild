@@ -7,4 +7,4 @@ Requirements:
 
 Work in progress:
 - Remaining soapy modules
-- Resource bundling
+- Resource bundling; move dll deps into place

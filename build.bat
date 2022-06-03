@@ -1,4 +1,5 @@
 @echo off
+cls 
 
 setlocal
 
@@ -11,6 +12,7 @@ call scripts\build_deps
 call scripts\build_module_airspy
 call scripts\build_module_airspyhf
 call scripts\build_module_audio
+@REM call scripts\build_module_bladerf
 call scripts\build_module_hackrf
 call scripts\build_module_pluto
 call scripts\build_module_remote

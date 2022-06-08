@@ -22,6 +22,6 @@ call scripts\build_module_redpitaya
 call scripts\build_module_sdrplay
 call scripts\build_module_uhd
 
-@REM call scripts\build_cubic
+call scripts\build_cubic
 
 endlocal

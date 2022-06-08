@@ -19,8 +19,9 @@ call scripts\build_module_pluto
 call scripts\build_module_remote
 call scripts\build_module_rtlsdr
 call scripts\build_module_redpitaya
+call scripts\build_module_sdrplay
 call scripts\build_module_uhd
 
-call scripts\build_cubic
+@REM call scripts\build_cubic
 
 endlocal

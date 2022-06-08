@@ -30,7 +30,7 @@ if not exist fftw-3.3.5-dll64 (
     echo Downloading fftw..
     powershell -Command "Invoke-WebRequest https://fftw.org/pub/fftw/fftw-3.3.5-dll64.zip -OutFile fftw-3.3.5-dll64.zip"
     @REM powershell Expand-Archive fftw-3.3.5-dll64.zip fftw-3.3.5-dll64
-    7z fftw-3.3.5-dll64.zip fftw-3.3.5-dll64
+    7z x fftw-3.3.5-dll64.zip fftw-3.3.5-dll64
     cd fftw-3.3.5-dll64/
     lib /def:libfftw3f-3.def /MACHINE:x64
 )

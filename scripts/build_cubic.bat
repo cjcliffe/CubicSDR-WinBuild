@@ -6,7 +6,8 @@ if not exist wxWidgets-3.1.6 (
     echo Downloading wxWidgets..
     powershell -Command "Invoke-WebRequest https://github.com/wxWidgets/wxWidgets/releases/download/v3.1.6/wxWidgets-3.1.6.zip -OutFile wxWidgets-3.1.6.zip"
     @REM powershell Expand-Archive wxWidgets-3.1.6.zip -DestinationPath wxWidgets-3.1.6
-    7z x wxWidgets-3.1.6.zip
+    mkdir wxWidgets-3.1.6
+    7z x wxWidgets-3.1.6.zip -owxWidgets-3.1.6
     cd wxWidgets-3.1.6/build/msw
     msbuild wx_vc17.sln /property:Configuration=Release /property:Platform=x64
 )

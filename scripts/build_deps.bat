@@ -15,7 +15,8 @@ cd %CS_DEPS%
 if not exist pthread-win32-3.0.3.1 (
     echo Downloading pthreads..
     powershell -Command "Invoke-WebRequest https://github.com/GerHobbelt/pthread-win32/archive/refs/tags/v3.0.3.1.zip -OutFile pthread_win.zip"
-    powershell Expand-Archive pthread_win.zip .
+    @REM powershell Expand-Archive pthread_win.zip .
+    7z x pthread_win.zip
     cd pthread-win32-3.0.3.1/windows/VS2019/
     devenv /Upgrade pthread.2019.sln
     msbuild pthread.2019.sln /property:Configuration=Release /property:Platform=x64
@@ -28,7 +29,8 @@ cd %CS_DEPS%
 if not exist fftw-3.3.5-dll64 (
     echo Downloading fftw..
     powershell -Command "Invoke-WebRequest https://fftw.org/pub/fftw/fftw-3.3.5-dll64.zip -OutFile fftw-3.3.5-dll64.zip"
-    powershell Expand-Archive fftw-3.3.5-dll64.zip fftw-3.3.5-dll64
+    @REM powershell Expand-Archive fftw-3.3.5-dll64.zip fftw-3.3.5-dll64
+    7z fftw-3.3.5-dll64.zip fftw-3.3.5-dll64
     cd fftw-3.3.5-dll64/
     lib /def:libfftw3f-3.def /MACHINE:x64
 )
@@ -97,5 +99,18 @@ if not exist libxml2 (
 
 set "LIBXML2_LIBRARY=%CS_INSTALL%/libxml2/lib/libxml2.lib"
 set "LIBXML2_INCLUDE_DIR=%CS_INSTALL%/libxml2/include/libxml2;%LIBICONV_INCLUDE_DIR%"
+
+
+cd %CS_DEPS%
+if not exist boost_1_79_0 (
+    powershell -Command "Invoke-WebRequest https://boostorg.jfrog.io/artifactory/main/release/1.79.0/source/boost_1_79_0.zip -OutFile boost_1_79_0.zip"
+    7z x boost_1_79_0.zip boost_1_79_0
+    mkdir boost-build
+    cd boost_1_79_0
+    call bootstrap
+    b2 --build-type=complete --with-filesystem --with-thread --with-serialization --with-system msvc stage
+)
+
+set "BOOST_INCLUDE_DIRS=%CS_DEPS%/boost_1_79_0"
 
 cd %CS_ROOT%

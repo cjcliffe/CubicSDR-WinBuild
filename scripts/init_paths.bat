@@ -28,4 +28,6 @@ if not exist dependencies (
 )
 set "CS_DEPS=%BUILD_ROOT%/dependencies"
 
+set "path=%path%;C:\Program Files\7-Zip;C:\Program Files (x86)\7-Zip"
+
 cd %CS_ROOT%

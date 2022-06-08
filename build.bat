@@ -14,6 +14,7 @@ call scripts\build_module_airspyhf
 call scripts\build_module_audio
 @REM call scripts\build_module_bladerf
 call scripts\build_module_hackrf
+call scripts\build_module_netsdr
 call scripts\build_module_pluto
 call scripts\build_module_remote
 call scripts\build_module_rtlsdr

@@ -21,6 +21,7 @@ if not exist uhd (
 )  
 set "UHD_INCLUDE_DIR=%CS_INSTALL%/uhd/include"
 set "UHD_LIBRARIES=%CS_INSTALL%/uhd/lib/uhd.lib"
+xcopy /yf "%CS_INSTALL_BS%\uhd\bin\*.dll" "%CS_INSTALL_BS%\SoapySDR\bin\"
 
 
 cd %CS_SOURCES%

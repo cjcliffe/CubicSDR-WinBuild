@@ -19,6 +19,7 @@ if not exist airspyone_host (
 
 set "AIRSPY_INCLUDE_DIR=%CS_INSTALL%/airspy/include/"
 set "AIRSPY_LIBRARIES=%CS_INSTALL%/airspy/bin/airspy.lib"
+xcopy /yf "%CS_INSTALL_BS%\airspy\bin\*.dll" "%CS_INSTALL_BS%\SoapySDR\bin\"
 
 cd %CS_SOURCES%
 if not exist SoapyAirspy (

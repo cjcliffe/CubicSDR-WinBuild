@@ -21,6 +21,7 @@ if not exist libiio (
 )
 set "LIBIIO_INCLUDE_DIR=%CS_INSTALL%/libiio/include"
 set "LIBIIO_LIBRARY=%CS_INSTALL%/libiio/lib/libiio.lib"
+xcopy /yf "%CS_INSTALL_BS%\libiio\bin\*.dll" "%CS_INSTALL_BS%\SoapySDR\bin\"
 
 
 cd %CS_SOURCES%
@@ -39,6 +40,7 @@ if not exist libad9361-iio (
 )
 set "LibAD9361_INCLUDE_DIR=%CS_INSTALL%/libad9361-iio/include"
 set "LibAD9361_LIBRARY=%CS_INSTALL%/libad9361-iio/lib/libad9361.lib"
+xcopy /yf "%CS_INSTALL_BS%\libad9361-iio\bin\*.dll" "%CS_INSTALL_BS%\SoapySDR\bin\"
 
 
 cd %CS_SOURCES%

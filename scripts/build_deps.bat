@@ -7,9 +7,9 @@ if not exist libusb (
     devenv /Upgrade libusb_2019.sln 
     msbuild libusb_2019.sln /property:Configuration=Release /property:Platform=x64
 )
-set "LIBUSB_LIBRARIES=%CS_DEPS%/libusb/x64/Release/lib/libusb-1.0.lib"
+set "LIBUSB_LIBRARIES=%CS_DEPS%/libusb/x64/Release/dll/libusb-1.0.lib"
 set "LIBUSB_INCLUDE_DIR=%CS_DEPS%/libusb/libusb"
-
+xcopy /yfi "%CS_DEPS_BS%\libusb\x64\Release\dll\*.dll" "%CS_INSTALL_BS%\SoapySDR\bin\"
 
 cd %CS_DEPS%
 if not exist pthread-win32-3.0.3.1 (
@@ -23,6 +23,7 @@ if not exist pthread-win32-3.0.3.1 (
 )
 set "PTHREADS_LIBRARIES=%CS_DEPS%/pthread-win32-3.0.3.1/windows/VS2019/bin/Release-Unicode-64bit-x64/pthread.lib"
 set "PTHREADS_INCLUDE_DIR=%CS_DEPS%/pthread-win32-3.0.3.1"
+xcopy /yfi "%CS_DEPS_BS%\pthread-win32-3.0.3.1\windows\VS2019\bin\Release-Unicode-64bit-x64\*.dll" "%CS_INSTALL_BS%\SoapySDR\bin\"
 
 
 cd %CS_DEPS%
@@ -37,6 +38,7 @@ if not exist fftw-3.3.5-dll64 (
 )
 set "FFTW3_LIBRARIES=%CS_DEPS%/fftw-3.3.5-dll64/libfftw3f-3.lib"
 set "FFTW3_INCLUDE_DIR=%CS_DEPS%/fftw-3.3.5-dll64/"
+xcopy /yf "%CS_DEPS_BS%\fftw-3.3.5-dll64\libfftw3f-3.dll" "%CS_INSTALL_BS%\SoapySDR\bin\"
 
 
 cd %CS_DEPS%
@@ -47,6 +49,7 @@ if not exist libiconv-win-build (
 )
 set "LIBICONV_INCLUDE_DIR=%CS_DEPS%/libiconv-win-build/include"
 set "LIBICONV_LIBRARY=%CS_DEPS%/libiconv-win-build/build-VS2022/x64/Release/libiconv.lib"
+xcopy /yf "%CS_DEPS_BS%\libiconv-win-build\build-VS2022\x64\Release\*.dll" "%CS_INSTALL_BS%\SoapySDR\bin\"
 
 
 cd %CS_DEPS%
@@ -58,6 +61,7 @@ if not exist xz (
 )
 set "LIBLZMA_LIBRARIES=%CS_DEPS%/xz/windows/vs2019/Release/x64/liblzma_dll/liblzma.lib"
 set "LIBLZMA_INCLUDE_DIR=%CS_DEPS%/xz/src/liblzma/api"
+xcopy /yf "%CS_DEPS_BS%\xz\windows\vs2019\Release\x64\liblzma_dll\*.dll" "%CS_INSTALL_BS%\SoapySDR\bin\"
 
 
 cd %CS_SOURCES%
@@ -75,6 +79,7 @@ if not exist zlib (
 )
 set "ZLIB_LIBRARY=%CS_INSTALL%/zlib/lib/zlib.lib"
 set "ZLIB_INCLUDE_DIR=%CS_INSTALL%/zlib/include"
+xcopy /yf "%CS_INSTALL_BS%\zlib\bin\*.dll" "%CS_INSTALL_BS%\SoapySDR\bin\"
 
 
 cd %CS_SOURCES%
@@ -100,6 +105,7 @@ if not exist libxml2 (
 
 set "LIBXML2_LIBRARY=%CS_INSTALL%/libxml2/lib/libxml2.lib"
 set "LIBXML2_INCLUDE_DIR=%CS_INSTALL%/libxml2/include/libxml2;%LIBICONV_INCLUDE_DIR%"
+xcopy /yf "%CS_INSTALL_BS%\libxml2\bin\*.dll" "%CS_INSTALL_BS%\SoapySDR\bin\"
 
 
 cd %CS_DEPS%
@@ -113,5 +119,9 @@ if not exist boost_1_79_0 (
 )
 
 set "BOOST_INCLUDE_DIRS=%CS_DEPS%/boost_1_79_0"
+xcopy /yf "%CS_DEPS%\boost_1_79_0\stage\lib\boost_filesystem*mt-x64-1_79.dll" "%CS_INSTALL_BS%\SoapySDR\bin\"
+xcopy /yf "%CS_DEPS%\boost_1_79_0\stage\lib\boost_thread*mt-x64-1_79.dll" "%CS_INSTALL_BS%\SoapySDR\bin\"
+xcopy /yf "%CS_DEPS%\boost_1_79_0\stage\lib\boost_serialization*mt-x64-1_79.dll" "%CS_INSTALL_BS%\SoapySDR\bin\"
+xcopy /yf "%CS_DEPS%\boost_1_79_0\stage\lib\boost_system*mt-x64-1_79.dll" "%CS_INSTALL_BS%\SoapySDR\bin\"
 
 cd %CS_ROOT%

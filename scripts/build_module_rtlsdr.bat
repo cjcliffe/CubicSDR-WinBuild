@@ -18,6 +18,7 @@ if not exist librtlsdr (
 )
 set "RTLSDR_INCLUDE_DIR=%CS_SOURCES%/librtlsdr/include/"
 set "RTLSDR_LIBRARIES=%CS_TARGET%/librtlsdr/src/Release/rtlsdr.lib"
+xcopy /yf "%CS_TARGET_BS%\librtlsdr\src\Release\*.dll" "%CS_INSTALL_BS%\SoapySDR\bin\"
 
 cd %CS_SOURCES%
 if not exist SoapyRTLSDR (

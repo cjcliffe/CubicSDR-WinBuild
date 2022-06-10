@@ -19,6 +19,7 @@ if not exist airspyhf (
 
 set "AIRSPYHF_INCLUDE_DIR=%CS_INSTALL%/airspyhf/include/"
 set "AIRSPYHF_LIBRARIES=%CS_INSTALL%/airspyhf/bin/airspyhf.lib"
+xcopy /yf "%CS_INSTALL_BS%\airspyhf\bin\*.dll" "%CS_INSTALL_BS%\SoapySDR\bin\"
 
 cd %CS_SOURCES%
 if not exist SoapyAirspyHF (

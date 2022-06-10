@@ -20,6 +20,7 @@ if not exist hackrf (
 )
 set "HACKRF_INCLUDE_DIR=%CS_INSTALL%/hackrf/include/libhackrf"
 set "HACKRF_LIBRARIES=%CS_INSTALL%/hackrf/bin/hackrf.lib"
+xcopy /yf "%CS_INSTALL_BS%\hackrf\bin\*.dll" "%CS_INSTALL_BS%\SoapySDR\bin\"
 
 cd %CS_SOURCES%
 if not exist SoapyHackRF (

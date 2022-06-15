@@ -25,7 +25,7 @@ SET BUNDLE_MSVC_REDIST=%CS_DEPS%/vc_redist.x64.exe
 
 cd %CS_SOURCES%
 if not exist CubicSDR (
-    git clone https://github.com/cjcliffe/CubicSDR 
+    git clone -b winbuild-updates https://github.com/cjcliffe/CubicSDR 
 )
 
 cd %CS_TARGET%

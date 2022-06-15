@@ -12,5 +12,7 @@ Notes:
  - Install Python with option 'Add to PATH' or add manually
 
 Work in progress:
-- Remaining soapy modules
-- Resource bundling; move dll deps into place
+- 32-bit build
+- Hamlib
+- Digital lab builds
+- Automatic github uploads

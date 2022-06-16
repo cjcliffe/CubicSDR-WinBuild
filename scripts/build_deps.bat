@@ -112,7 +112,6 @@ cd %CS_DEPS%
 if not exist boost_1_79_0 (
     powershell -Command "Invoke-WebRequest https://boostorg.jfrog.io/artifactory/main/release/1.79.0/source/boost_1_79_0.zip -OutFile boost_1_79_0.zip"
     7z x boost_1_79_0.zip boost_1_79_0
-    mkdir boost-build
     cd boost_1_79_0
     call bootstrap
     b2 --build-type=complete --with-filesystem --with-thread --with-serialization --with-system msvc stage
@@ -123,5 +122,45 @@ xcopy /yf "%CS_DEPS%\boost_1_79_0\stage\lib\boost_filesystem*mt-x64-1_79.dll" "%
 xcopy /yf "%CS_DEPS%\boost_1_79_0\stage\lib\boost_thread*mt-x64-1_79.dll" "%CS_INSTALL_BS%\SoapySDR\bin\"
 xcopy /yf "%CS_DEPS%\boost_1_79_0\stage\lib\boost_serialization*mt-x64-1_79.dll" "%CS_INSTALL_BS%\SoapySDR\bin\"
 xcopy /yf "%CS_DEPS%\boost_1_79_0\stage\lib\boost_system*mt-x64-1_79.dll" "%CS_INSTALL_BS%\SoapySDR\bin\"
+
+
+
+cd %CS_DEPS%
+if not exist wxWidgets-3.1.6 (
+    echo Downloading wxWidgets..
+    powershell -Command "Invoke-WebRequest https://github.com/wxWidgets/wxWidgets/releases/download/v3.1.6/wxWidgets-3.1.6.zip -OutFile wxWidgets-3.1.6.zip"
+    @REM powershell Expand-Archive wxWidgets-3.1.6.zip -DestinationPath wxWidgets-3.1.6
+    mkdir wxWidgets-3.1.6
+    7z x wxWidgets-3.1.6.zip -owxWidgets-3.1.6
+    cd wxWidgets-3.1.6/build/msw
+    msbuild wx_vc17.sln /property:Configuration=Release /property:Platform=x64
+)
+set WXWIDGETS_ROOT_DIR=%CS_DEPS%/wxWidgets-3.1.6
+
+cd %CS_DEPS%
+if not exist vc_redist.x64.exe (
+    echo Downloading MSVC X64 redistributable..
+    powershell -Command "Invoke-WebRequest https://aka.ms/vs/17/release/vc_redist.x64.exe -OutFile vc_redist.x64.exe"
+)
+SET BUNDLE_MSVC_REDIST=%CS_DEPS%/vc_redist.x64.exe
+
+
+
+cd %CS_DEPS%
+if not exist hamlib-w64-4.4 (
+    powershell -Command "Invoke-WebRequest https://github.com/Hamlib/Hamlib/releases/download/4.4/hamlib-w64-4.4.zip -OutFile hamlib-w64-4.4.zip"
+    7z x hamlib-w64-4.4.zip
+    cd hamlib-w64-4.4\lib\msvc
+    lib /def:libhamlib-4.def /MACHINE:x64
+    cd %CS_DEPS%\hamlib-w64-4.4\include\hamlib
+    @REM Not sure why this isn't protected by an ifdef?
+    powershell -Command "(gc rig.h) -replace '#include <sys/time.h>', '// # include <sys/time.h>' | Out-File -encoding ASCII rig_upd.h"
+    del rig.h
+    move rig_upd.h rig.h
+)
+cd %CS_DEPS%
+set "HAMLIB_LIBRARY=%CS_DEPS%/hamlib-w64-4.4/lib/msvc/libhamlib-4.lib"
+set "HAMLIB_INCLUDE_DIR=%CS_DEPS%/hamlib-w64-4.4/include/"
+xcopy /yf "%CS_DEPS_BS%\hamlib-w64-4.4\bin\*.dll" "%CS_INSTALL_BS%\SoapySDR\bin\"
 
 cd %CS_ROOT%

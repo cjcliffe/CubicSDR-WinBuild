@@ -7,6 +7,7 @@ Requirements:
  - [7-zip](https://www.7-zip.org/)
  - [Python](https://www.python.org/downloads/release/python-3105/)
  - [SDRPlay RSP API](https://www.sdrplay.com/software/SDRplay_RSP_API-Windows-3.09.exe)
+ - [CMake](https://cmake.org/install/)
 
 Notes:
  - Install Python with option 'Add to PATH' or add manually

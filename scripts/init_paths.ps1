@@ -2,44 +2,28 @@
 $CS_ROOT=(get-location).path -replace '\\', '/'
 Write-Host "Initializing Paths under $CS_ROOT.."
 
-$BUILD_ROOT="$CS_ROOT/build"
-if (-not ($BUILD_ROOT | Test-Path)) {
-     $null=New-Item $BUILD_ROOT -ItemType Directory
-}
+$BUILD_ROOT="$CS_ROOT/build-$CS_BUILD_ARCH-$CS_BUILD_TYPE"
+New-Item -ItemType Directory -Path $BUILD_ROOT -Force | Out-Null
 Write-Host "`tBuild Path: $BUILD_ROOT"
 
 $CS_SOURCES="$BUILD_ROOT/sources"
-if (-not ($CS_SOURCES | Test-Path)) {
-    $null=New-Item $CS_SOURCES -ItemType Directory
-}
+New-Item -ItemType Directory -Path $CS_SOURCES -Force | Out-Null
 Write-Host "`tSources Path: $CS_SOURCES"
 
 $CS_TARGET="$BUILD_ROOT/target"
-if (-not ($CS_TARGET | Test-Path)) {
-    $null=New-Item $CS_TARGET -ItemType Directory
-}
+New-Item -ItemType Directory -Path $CS_TARGET -Force | Out-Null
 Write-Host "`tTarget Path: $CS_TARGET"
 
 $CS_INSTALL="$BUILD_ROOT/install"
-if (-not ($CS_INSTALL | Test-Path)) {
-    $null=New-Item $CS_INSTALL -ItemType Directory
-}
+New-Item -ItemType Directory -Path $CS_INSTALL -Force | Out-Null
 
-$CS_DEPS="$BUILD_ROOT\dependencies"
-if (-not ($CS_DEPS | Test-Path)) {
-    $null=New-Item $CS_DEPS -ItemType Directory
-}
-Write-Host "`tDependencies Path: $CS_TARGET"
+$CS_DEPS="$BUILD_ROOT/dependencies"
+New-Item -ItemType Directory -Path $CS_DEPS -Force | Out-Null
+Write-Host "`tDependencies Path: $CS_DEPS"
 
-if (-not $env:Path -contains "7-Zip") {
-    $SZ64_PATH="C:\Program Files\7-Zip"
-    if ($SZ64_PATH | Test-Path) {
-        Write-Host "`7-Zip Found: $SZ64_PATH"
-        $env:Path="$env:Path;$SZ64_PATH;"
-    }
-    $SZX86_PATH="C:\Program Files (x86)\7-Zip"
-    if ($SZX86_PATH | Test-Path) {
-        Write-Host "`7-Zip Found: $SZX86_PATH"
-        $env:Path="$env:Path;$SZX86_PATH;"
-    }
+$SZ_PATH=(Get-ChildItem -Path "C:\Program Files" -Filter "7z.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1).DirectoryName
+if (-not ($SZ_PATH | Test-Path)) {
+    $SZ_PATH=(Get-ChildItem -Path "C:\Program Files (x86)" -Filter "7z.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1).DirectoryName
 }
+$SZ_CMD="$SZ_PATH\7z.exe"
+Write-Host "`t7-Zip Path: $SZ_CMD"

@@ -8,8 +8,8 @@ $SOAPY_SDR_TARGET="$CS_TARGET/SoapySDR"
 $SOAPY_SDR_INSTALL="$CS_INSTALL/SoapySDR"
 if (-not ($SOAPY_SDR_TARGET | Test-Path)) {
     $null=New-Item $SOAPY_SDR_TARGET -ItemType Directory
-    cmake -B "$SOAPY_SDR_TARGET" -G "$CS_GENERATOR" -A x64 "$SOAPY_SDR_SOURCE" -DCMAKE_INSTALL_PREFIX="$SOAPY_SDR_INSTALL"
-    cmake --build "$SOAPY_SDR_TARGET" --config Release --target install
+    cmake -B "$SOAPY_SDR_TARGET" -G "$CS_GENERATOR" -A $CS_BUILD_ARCH "$SOAPY_SDR_SOURCE" -DCMAKE_INSTALL_PREFIX="$SOAPY_SDR_INSTALL"
+    cmake --build "$SOAPY_SDR_TARGET" --config $CS_BUILD_TYPE --target install
 }
 
 

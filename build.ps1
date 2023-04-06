@@ -1,4 +1,18 @@
-$CS_GENERATOR="Visual Studio 17 2022"
+param(
+    [string]$type = "Release",
+    [string]$arch = "x64",
+    [string]$generator = "Visual Studio 17 2022"
+)
+$CS_BUILD_TYPE = $type
+$CS_GENERATOR = $generator
+$CS_BUILD_ARCH = $arch
+
+Write-Host "`CubicSDR Windows Builder"
+Write-Host "`tBuild Type: $CS_BUILD_TYPE"
+Write-Host "`tBuild Arch: $CS_BUILD_ARCH"
+Write-Host "`tGenerator: $CS_GENERATOR"
+
+
 
 # Initialize build paths
 . .\scripts\init_paths.ps1
@@ -14,7 +28,7 @@ $CS_GENERATOR="Visual Studio 17 2022"
 . .\scripts\build_module_audio.ps1
 . .\scripts\build_module_hackrf.ps1
 . .\scripts\build_module_pluto.ps1
-. .\scripts\build_module_netsdr.ps1
+# . .\scripts\build_module_netsdr.ps1 # seems to lock-up device enumerator?
 . .\scripts\build_module_remote.ps1
 . .\scripts\build_module_redpitaya.ps1
 . .\scripts\build_module_rtlsdr.ps1

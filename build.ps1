@@ -1,13 +1,18 @@
 param(
+    [ValidateSet("Release", "Debug")]
     [string]$type = "Release",
+    
+    [ValidateSet("x64", "Win32")]
     [string]$arch = "x64",
+    
     [string]$generator = "Visual Studio 17 2022"
 )
+
 $CS_BUILD_TYPE = $type
 $CS_GENERATOR = $generator
 $CS_BUILD_ARCH = $arch
 
-Write-Host "`CubicSDR Windows Builder"
+Write-Host "CubicSDR Windows Builder"
 Write-Host "`tBuild Type: $CS_BUILD_TYPE"
 Write-Host "`tBuild Arch: $CS_BUILD_ARCH"
 Write-Host "`tGenerator: $CS_GENERATOR"

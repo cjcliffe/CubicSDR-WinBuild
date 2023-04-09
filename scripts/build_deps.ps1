@@ -1,3 +1,11 @@
+switch ($CS_BUILD_ARCH) {
+    "x64" { 
+        $LIBTOOL_ARCH="X64"
+    }
+    "Win32" { 
+        $LIBTOOL_ARCH="X86"
+    }
+}
 
 $LIBUSB_SOURCES="$CS_DEPS/libusb"
 $LIBUSB_PROJECT="$LIBUSB_SOURCES/msvc/libusb.sln"
@@ -35,13 +43,11 @@ switch ($CS_BUILD_ARCH) {
         $FFTW_ZIP="$CS_DEPS/fftw-3.3.5-dll64.zip"
         $FFTW_BINS="$CS_DEPS/fftw-3.3.5-dll64"
         $FFTW_URL="https://fftw.org/pub/fftw/fftw-3.3.5-dll64.zip"
-        $LIBTOOL_ARCH="X64"
     }
     "Win32" { 
         $FFTW_ZIP="$CS_DEPS/fftw-3.3.5-dll32.zip"
         $FFTW_BINS="$CS_DEPS/fftw-3.3.5-dll32"
         $FFTW_URL="https://fftw.org/pub/fftw/fftw-3.3.5-dll32.zip"
-        $LIBTOOL_ARCH="X86"
     }
 }
 if (-not ($FFTW_BINS | Test-Path)) {
@@ -196,7 +202,7 @@ if (-not ($HAMLIB_SOURCES | Test-Path)) {
     Invoke-WebRequest $HAMLIB_URL -OutFile $HAMLIB_ZIP
     & $SZ_CMD x $HAMLIB_ZIP -o"$CS_DEPS"
     Set-Location $HAMLIB_SOURCES/lib/msvc
-    lib /def:libhamlib-4.def /MACHINE:$CS_BUILD_ARCH
+    lib /def:libhamlib-4.def /MACHINE:$LIBTOOL_ARCH
     Set-Location $HAMLIB_SOURCES/include/hamlib
     # Not sure why this isn't protected by an ifdef?
     (Get-Content rig.h) -replace '#include <sys/time.h>', '// # include <sys/time.h>' | Out-File -encoding ASCII rig_upd.h

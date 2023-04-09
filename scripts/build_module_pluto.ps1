@@ -16,7 +16,7 @@ if (-not ($LIBIIO_TARGET | Test-Path)) {
         -DLIBXML2_LIBRARY:FILEPATH="$LIBXML2_LIBRARY" `
         -DLIBXML2_INCLUDE_DIR:PATH="$LIBXML2_INCLUDE_DIR"
         
-    cmake --build $LIBIIO_TARGET --config Release --target install
+    cmake --build $LIBIIO_TARGET --config $CS_BUILD_TYPE --target install
 }
 $LIBIIO_INCLUDE_DIR="$CS_INSTALL/libiio/include"
 $LIBIIO_LIBRARY="$CS_INSTALL/libiio/lib/libiio.lib"
@@ -36,7 +36,7 @@ if (-not ($LIBAD_TARGET | Test-Path)) {
         -DCMAKE_INSTALL_PREFIX="$LIBAD_INSTALL" `
         -DLIBIIO_INCLUDEDIR="$LIBIIO_INCLUDE_DIR" `
         -DLIBIIO_LIBRARIES="$LIBIIO_LIBRARY"
-    cmake --build $LIBAD_TARGET --config Release --target install
+    cmake --build $LIBAD_TARGET --config $CS_BUILD_TYPE --target install
 }
 $LibAD9361_INCLUDE_DIR="$LIBAD_INSTALL/include"
 $LibAD9361_LIBRARY="$LIBAD_INSTALL/lib/libad9361.lib"

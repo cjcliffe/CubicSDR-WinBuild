@@ -16,7 +16,7 @@ if (-not ($UHD_TARGET | Test-Path)) {
         -DENABLE_UTILS=OFF `
         -DENABLE_TESTS=OFF `
         -DENABLE_TESTS=OFF
-    cmake --build $UHD_TARGET --config Release --target install
+    cmake --build $UHD_TARGET --config $CS_BUILD_TYPE --target install
 }
 $UHD_INCLUDE_DIR="$UHD_INSTALL/include"
 $UHD_LIBRARIES="$UHD_INSTALL/lib/uhd.lib"
@@ -36,8 +36,7 @@ if (-not ($SOAPY_UHD_TARGET | Test-Path)) {
         -DUHD_INCLUDE_DIRS:PATH="$UHD_INCLUDE_DIR" `
         -DBoost_INCLUDE_DIR:PATH="$BOOST_INCLUDE_DIRS" `
         -DCMAKE_INSTALL_PREFIX:PATH="$SOAPY_SDR_INSTALL" `
-        -DCMAKE_PREFIX_PATH:PATH="$SOAPY_SDR_INSTALL" `
-        -DSOAPY_SDR_ROOT="$SOAPY_SDR_INSTALL" 
+        -DCMAKE_PREFIX_PATH:PATH="$SOAPY_SDR_INSTALL"
     cmake --build $SOAPY_UHD_TARGET --config $CS_BUILD_TYPE --target install
 }
  

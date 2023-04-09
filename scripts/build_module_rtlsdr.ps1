@@ -14,7 +14,7 @@ if (-not ($RTLSDR_TARGET | Test-Path)) {
         -DLIBUSB_INCLUDE_DIRS:PATH="$LIBUSB_INCLUDE_DIR" `
         -DLIBUSB_LIBRARIES:PATH="$LIBUSB_LIBRARIES" `
         -DCMAKE_INSTALL_PREFIX="$RTLSDR_INSTALL"
-    cmake --build $RTLSDR_TARGET --config Release --target install
+    cmake --build $RTLSDR_TARGET --config $CS_BUILD_TYPE --target install
 }
 
 $RTLSDR_INCLUDE_DIR="$RTLSDR_INSTALL/include/"
@@ -36,7 +36,6 @@ if (-not ($SOAPY_RTLSDR_TARGET | Test-Path)) {
         -DRTLSDR_LIBRARY:PATH="$RTLSDR_LIBRARIES" `
         -DRTLSDR_INCLUDE_DIR:PATH="$RTLSDR_INCLUDE_DIR" `
         -DCMAKE_INSTALL_PREFIX:PATH="$SOAPY_SDR_INSTALL" `
-        -DCMAKE_PREFIX_PATH:PATH="$SOAPY_SDR_INSTALL" `
-        -DSOAPY_SDR_ROOT="$SOAPY_SDR_INSTALL" 
+        -DCMAKE_PREFIX_PATH:PATH="$SOAPY_SDR_INSTALL"
     cmake --build $SOAPY_RTLSDR_TARGET --config $CS_BUILD_TYPE --target install
 }

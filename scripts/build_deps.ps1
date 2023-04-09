@@ -11,18 +11,18 @@ $LIBUSB_SOURCES="$CS_DEPS/libusb"
 $LIBUSB_PROJECT="$LIBUSB_SOURCES/msvc/libusb.sln"
 if (-not ($LIBUSB_SOURCES | Test-Path)) {
     git clone https://github.com/libusb/libusb $LIBUSB_SOURCES
-    msbuild $LIBUSB_PROJECT /property:Configuration=Release /property:Platform=$CS_BUILD_ARCH
+    msbuild $LIBUSB_PROJECT /property:Configuration=$CS_BUILD_TYPE /property:Platform=$CS_BUILD_ARCH
 }
-$LIBUSB_LIBRARIES="$CS_DEPS/libusb/build/v143/$CS_BUILD_ARCH/Release/dll/libusb-1.0.lib"
+$LIBUSB_LIBRARIES="$CS_DEPS/libusb/build/v143/$CS_BUILD_ARCH/$CS_BUILD_TYPE/dll/libusb-1.0.lib"
 $LIBUSB_INCLUDE_DIR="$CS_DEPS/libusb/libusb"
-Copy-Item -Path "$CS_DEPS/libusb/build/v143/$CS_BUILD_ARCH/Release/dll/*.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
+Copy-Item -Path "$CS_DEPS/libusb/build/v143/$CS_BUILD_ARCH/$CS_BUILD_TYPE/dll/*.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
 
 
 $PTHREADS_URL="https://github.com/GerHobbelt/pthread-win32/archive/refs/tags/v3.0.3.1.zip"
 $PTHREADS_SOURCES="$CS_DEPS/pthread-win32-3.0.3.1"
 switch ($CS_BUILD_ARCH) {
-    "x64" { $PTHREADS_BUILD_DIR="$PTHREADS_SOURCES/windows/VS2019/bin/Release-Unicode-64bit-x64" }
-    "Win32" { $PTHREADS_BUILD_DIR="$PTHREADS_SOURCES/windows/VS2019/bin/Release-Unicode-32bit-x86" }
+    "x64" { $PTHREADS_BUILD_DIR="$PTHREADS_SOURCES/windows/VS2019/bin/$CS_BUILD_TYPE-Unicode-64bit-x64" }
+    "Win32" { $PTHREADS_BUILD_DIR="$PTHREADS_SOURCES/windows/VS2019/bin/$CS_BUILD_TYPE-Unicode-32bit-x86" }
 }
 $PTHREADS_ZIP="$CS_DEPS/pthread_win.zip"
 $PTHREADS_PROJECT="$PTHREADS_SOURCES/windows/VS2019/pthread.2019.sln"
@@ -31,7 +31,7 @@ if (-not ($PTHREADS_SOURCES | Test-Path)) {
     # Expand-Archive $PTHREADS_ZIP $CS_DEPS
     & $SZ_CMD x $PTHREADS_ZIP -o"$CS_DEPS"
     devenv /Upgrade $PTHREADS_PROJECT
-    msbuild $PTHREADS_PROJECT /property:Configuration=Release /property:Platform=$CS_BUILD_ARCH
+    msbuild $PTHREADS_PROJECT /property:Configuration=$CS_BUILD_TYPE /property:Platform=$CS_BUILD_ARCH
 }
 $PTHREADS_LIBRARIES="$PTHREADS_BUILD_DIR/pthread.lib"
 $PTHREADS_INCLUDE_DIR="$PTHREADS_SOURCES"
@@ -73,11 +73,11 @@ switch ($CS_BUILD_ARCH) {
 }
 if (-not ($ICONV_SOURCES | Test-Path)) {
     git clone https://github.com/kiyolee/libiconv-win-build.git $ICONV_SOURCES
-    msbuild $ICONV_PROJECT /property:Configuration=Release /property:Platform=$CS_BUILD_ARCH   
+    msbuild $ICONV_PROJECT /property:Configuration=$CS_BUILD_TYPE /property:Platform=$CS_BUILD_ARCH   
 }
 $LIBICONV_INCLUDE_DIR="$ICONV_SOURCES/include"
-$LIBICONV_LIBRARY="$ICONV_SOURCES/build-VS2022/$ICONV_BUILD_PATH/Release/libiconv.lib"
-Copy-Item -Path "$CS_DEPS/libiconv-win-build/build-VS2022/$ICONV_BUILD_PATH/Release/*.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
+$LIBICONV_LIBRARY="$ICONV_SOURCES/build-VS2022/$ICONV_BUILD_PATH/$CS_BUILD_TYPE/libiconv.lib"
+Copy-Item -Path "$CS_DEPS/libiconv-win-build/build-VS2022/$ICONV_BUILD_PATH/$CS_BUILD_TYPE/*.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
 
 
 $XZ_SOURCES="$CS_DEPS/xz"
@@ -85,11 +85,11 @@ $XZ_PROJECT="$XZ_SOURCES/windows/VS2019/xz_win.sln"
 if (-not ($XZ_SOURCES | Test-Path)) {
     git clone -c advice.detachedHead=false -b v5.2.5 https://git.tukaani.org/xz.git $XZ_SOURCES
     devenv /Upgrade $XZ_PROJECT
-    msbuild $XZ_PROJECT /property:Configuration=Release /property:Platform=$CS_BUILD_ARCH
+    msbuild $XZ_PROJECT /property:Configuration=$CS_BUILD_TYPE /property:Platform=$CS_BUILD_ARCH
 }
-$LIBLZMA_LIBRARIES="$XZ_SOURCES/windows/vs2019/Release/$CS_BUILD_ARCH/liblzma_dll/liblzma.lib"
+$LIBLZMA_LIBRARIES="$XZ_SOURCES/windows/vs2019/$CS_BUILD_TYPE/$CS_BUILD_ARCH/liblzma_dll/liblzma.lib"
 $LIBLZMA_INCLUDE_DIR="$XZ_SOURCES/src/liblzma/api"
-Copy-Item -Path "$CS_DEPS/xz/windows/vs2019/Release/$CS_BUILD_ARCH/liblzma_dll/*.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
+Copy-Item -Path "$CS_DEPS/xz/windows/vs2019/$CS_BUILD_TYPE/$CS_BUILD_ARCH/liblzma_dll/*.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
 
 
 $ZLIB_SOURCES="$CS_SOURCES/zlib"
@@ -101,9 +101,13 @@ $ZLIB_INSTALL="$CS_INSTALL/zlib"
 if (-not ($ZLIB_TARGET | Test-Path)) {
     $null=New-Item $ZLIB_TARGET -ItemType Directory
     cmake -B $ZLIB_TARGET -G $CS_GENERATOR -A $CS_BUILD_ARCH $ZLIB_SOURCES -DCMAKE_INSTALL_PREFIX="$ZLIB_INSTALL"
-    cmake --build $ZLIB_TARGET --config Release --target install
+    cmake --build $ZLIB_TARGET --config $CS_BUILD_TYPE --target install
 }
-$ZLIB_LIBRARY="$ZLIB_INSTALL/lib/zlib.lib"
+
+switch ($CS_BUILD_TYPE) {
+    "Debug" { $ZLIB_LIBRARY="$ZLIB_INSTALL/lib/zlibd.lib" }
+    default { $ZLIB_LIBRARY="$ZLIB_INSTALL/lib/zlib.lib" }
+}
 $ZLIB_INCLUDE_DIR="$ZLIB_INSTALL/include"
 Copy-Item -Path "$CS_INSTALL/zlib/bin/*.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
 
@@ -126,9 +130,12 @@ if (-not ($LIBXML_TARGET | Test-Path)) {
         -DLIBXML2_WITH_PYTHON=OFF `
         -DZLIB_INCLUDE_DIR="$ZLIB_INCLUDE_DIR" `
         -DZLIB_LIBRARY="$ZLIB_LIBRARY"
-    cmake --build $LIBXML_TARGET --config Release --target install
+    cmake --build $LIBXML_TARGET --config $CS_BUILD_TYPE --target install
 }
-$LIBXML2_LIBRARY="$CS_INSTALL/libxml2/lib/libxml2.lib"
+switch ($CS_BUILD_TYPE) {
+    "Debug" { $LIBXML2_LIBRARY="$CS_INSTALL/libxml2/lib/libxml2d.lib" }
+    default { $LIBXML2_LIBRARY="$CS_INSTALL/libxml2/lib/libxml2.lib" }
+}
 $LIBXML2_INCLUDE_DIR="$CS_INSTALL/libxml2/include/libxml2;$LIBICONV_INCLUDE_DIR"
 Copy-Item -Path "$CS_INSTALL/libxml2/bin/*.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
 

@@ -16,7 +16,7 @@ if (-not ($HACKRF_TARGET | Test-Path)) {
         -DLIBUSB_INCLUDE_DIR:PATH="$LIBUSB_INCLUDE_DIR" `
         -DLIBUSB_LIBRARIES:PATH="$LIBUSB_LIBRARIES" `
         -DCMAKE_INSTALL_PREFIX="$HACKRF_INSTALL"
-    cmake --build $HACKRF_TARGET --config Release --target install
+    cmake --build $HACKRF_TARGET --config $CS_BUILD_TYPE --target install
 }
 
 $HACKRF_INCLUDE_DIR="$CS_INSTALL/hackrf/include/libhackrf"
@@ -36,7 +36,6 @@ if (-not ($SOAPY_HACKRF_TARGET | Test-Path)) {
         -DLIBHACKRF_LIBRARY:PATH="$HACKRF_LIBRARIES" `
         -DLIBHACKRF_INCLUDE_DIR:PATH="$HACKRF_INCLUDE_DIR" `
         -DCMAKE_INSTALL_PREFIX:PATH="$SOAPY_SDR_INSTALL" `
-        -DCMAKE_PREFIX_PATH:PATH="$SOAPY_SDR_INSTALL" `
-        -DSOAPY_SDR_ROOT="$SOAPY_SDR_INSTALL" 
+        -DCMAKE_PREFIX_PATH:PATH="$SOAPY_SDR_INSTALL"
     cmake --build $SOAPY_HACKRF_TARGET --config $CS_BUILD_TYPE --target install
 }

@@ -1,3 +1,1 @@
-build-Debug/
-build-Release/
-build-RelWithDebInfo/
+build-*

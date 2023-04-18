@@ -1,7 +1,7 @@
 
 $CUBICSDR_SOURCES="$CS_SOURCES/CubicSDR"
 if (-not ($CUBICSDR_SOURCES | Test-Path)) {
-    git clone -b winbuild-updates https://github.com/cjcliffe/CubicSDR $CUBICSDR_SOURCES
+    git clone https://github.com/cjcliffe/CubicSDR $CUBICSDR_SOURCES
 }
 
 $CUBICSDR_TARGET="$CS_TARGET/CubicSDR"

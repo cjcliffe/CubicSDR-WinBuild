@@ -144,9 +144,9 @@ switch ($CS_BUILD_ARCH) {
     "x64" { $B2_ARCH = "address-model=64" }
     "Win32" { $B2_ARCH = "address-model=32" }
 }
-$BOOST_URL="https://boostorg.jfrog.io/artifactory/main/release/1.79.0/source/boost_1_79_0.zip"
-$BOOST_ZIP="$CS_DEPS/boost_1_79_0.zip"
-$BOOST_SOURCES="$CS_DEPS/boost_1_79_0"
+$BOOST_URL="https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/boost_1_82_0.zip"
+$BOOST_ZIP="$CS_DEPS/boost_1_82_0.zip"
+$BOOST_SOURCES="$CS_DEPS/boost_1_82_0"
 $BOOST_INCLUDE_DIRS="$BOOST_SOURCES"
 if (-not ($BOOST_ZIP | Test-Path)) {
     Invoke-WebRequest $BOOST_URL -OutFile $BOOST_ZIP
@@ -159,10 +159,10 @@ if (-not ($BOOST_SOURCES | Test-Path)) {
     ./b2 --build-type=complete --with-filesystem --with-thread --with-serialization --with-system msvc stage $B2_ARCH
     Set-Location $CS_ROOT
 }
-Copy-Item -Path "$BOOST_SOURCES\stage\lib\boost_filesystem*mt-*-1_79.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
-Copy-Item -Path "$BOOST_SOURCES\stage\lib\boost_thread*mt-*-1_79.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
-Copy-Item -Path "$BOOST_SOURCES\stage\lib\boost_serialization*mt-*-1_79.dll"-Destination "$CS_INSTALL/SoapySDR/bin/"
-Copy-Item -Path "$BOOST_SOURCES\stage\lib\boost_system*mt-*-1_79.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
+Copy-Item -Path "$BOOST_SOURCES\stage\lib\boost_filesystem*mt-*-1_82.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
+Copy-Item -Path "$BOOST_SOURCES\stage\lib\boost_thread*mt-*-1_82.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
+Copy-Item -Path "$BOOST_SOURCES\stage\lib\boost_serialization*mt-*-1_82.dll"-Destination "$CS_INSTALL/SoapySDR/bin/"
+Copy-Item -Path "$BOOST_SOURCES\stage\lib\boost_system*mt-*-1_82.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
 
 
 $WXWIDGETS_ZIP="$CS_DEPS/wxWidgets-3.2.1.zip"

@@ -13,7 +13,5 @@ Notes:
  - Install Python with option 'Add to PATH' or add manually
 
 Work in progress:
-- 32-bit build
-- Hamlib
 - Digital lab builds
 - Automatic github uploads

@@ -33,6 +33,6 @@ if (-not ($SOAPY_AIRSPYHF_TARGET | Test-Path)) {
         -DLIBAIRSPYHF_INCLUDE_DIRS:PATH="$AIRSPYHF_INCLUDE_DIR" `
         -DCMAKE_INSTALL_PREFIX:PATH="$SOAPY_SDR_INSTALL" `
         -DCMAKE_PREFIX_PATH:PATH="$SOAPY_SDR_INSTALL"
-    cmake --build $AIRSPYHF_HOST_TARGET --config $CS_BUILD_TYPE --target install
+    cmake --build $SOAPY_AIRSPYHF_TARGET --config $CS_BUILD_TYPE --target install
 }
 

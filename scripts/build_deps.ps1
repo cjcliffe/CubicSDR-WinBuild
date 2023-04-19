@@ -140,29 +140,57 @@ $LIBXML2_INCLUDE_DIR="$CS_INSTALL/libxml2/include/libxml2;$LIBICONV_INCLUDE_DIR"
 Copy-Item -Path "$CS_INSTALL/libxml2/bin/*.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
 
 
+# Boost from Binaries
 switch ($CS_BUILD_ARCH) {
-    "x64" { $B2_ARCH = "address-model=64" }
-    "Win32" { $B2_ARCH = "address-model=32" }
+    "x64" { 
+        $BOOST_URL="https://sourceforge.net/projects/boost/files/boost-binaries/1.82.0/boost_1_82_0-msvc-14.3-64.exe/download"
+        $BOOST_INSTALLER="$CS_DEPS/boost_1_82_0-msvc-14.3-64.exe"
+    }
+    "Win32" { 
+        $BOOST_URL="https://sourceforge.net/projects/boost/files/boost-binaries/1.82.0/boost_1_82_0-msvc-14.1-32.exe/download"
+        $BOOST_INSTALLER="$CS_DEPS/boost_1_82_0-msvc-14.1-32.exe"
+    }
 }
-$BOOST_URL="https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/boost_1_82_0.zip"
-$BOOST_ZIP="$CS_DEPS/boost_1_82_0.zip"
-$BOOST_SOURCES="$CS_DEPS/boost_1_82_0"
-$BOOST_INCLUDE_DIRS="$BOOST_SOURCES"
-if (-not ($BOOST_ZIP | Test-Path)) {
-    Invoke-WebRequest $BOOST_URL -OutFile $BOOST_ZIP
+$BOOST_TARGET="$CS_DEPS/boost_1_82_0"
+$BOOST_INCLUDE_DIR="$BOOST_TARGET"
+$BOOST_LIB_DIR="$BOOST_TARGET/lib64-msvc-14.3"
+if (-not ($BOOST_INSTALLER | Test-Path)) {
+    Invoke-WebRequest -UserAgent "Wget" $BOOST_URL -OutFile $BOOST_INSTALLER
 }
-if (-not ($BOOST_SOURCES | Test-Path)) {
-    # Expand-Archive $BOOST_ZIP $BOOST_SOURCES
-    & $SZ_CMD x $BOOST_ZIP -o"$CS_DEPS"
-    Set-Location $BOOST_SOURCES
-    ./bootstrap
-    ./b2 --build-type=complete --with-filesystem --with-thread --with-serialization --with-system msvc stage $B2_ARCH
-    Set-Location $CS_ROOT
+if (-not ($BOOST_INSTALLER | Test-Path)) {
+    Write-Host "Starting Boost Install to $BOOST_TARGET.."
+    Start-Process -FilePath "$BOOST_INSTALLER" -ArgumentList "/DIR=$BOOST_TARGET /SP- /SILENT /SUPRESSMSGBOXES" -Wait
 }
-Copy-Item -Path "$BOOST_SOURCES\stage\lib\boost_filesystem*mt-*-1_82.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
-Copy-Item -Path "$BOOST_SOURCES\stage\lib\boost_thread*mt-*-1_82.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
-Copy-Item -Path "$BOOST_SOURCES\stage\lib\boost_serialization*mt-*-1_82.dll"-Destination "$CS_INSTALL/SoapySDR/bin/"
-Copy-Item -Path "$BOOST_SOURCES\stage\lib\boost_system*mt-*-1_82.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
+Copy-Item -Path "$BOOST_LIB_DIR/boost_filesystem*mt-x64-1_82.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
+Copy-Item -Path "$BOOST_LIB_DIR/boost_thread*mt-x64-1_82.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
+Copy-Item -Path "$BOOST_LIB_DIR/boost_serialization*mt-x64-1_82.dll"-Destination "$CS_INSTALL/SoapySDR/bin/"
+Copy-Item -Path "$BOOST_LIB_DIR/boost_system*mt-x64-1_82.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
+
+
+# Boost from Sources
+# switch ($CS_BUILD_ARCH) {
+#     "x64" { $B2_ARCH = "address-model=64" }
+#     "Win32" { $B2_ARCH = "address-model=32" }
+# }
+# $BOOST_URL="https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/boost_1_82_0.zip"
+# $BOOST_ZIP="$CS_DEPS/boost_1_82_0.zip"
+# $BOOST_SOURCES="$CS_DEPS/boost_1_82_0"
+# $BOOST_INCLUDE_DIR="$BOOST_SOURCES"
+# if (-not ($BOOST_ZIP | Test-Path)) {
+#     Invoke-WebRequest $BOOST_URL -OutFile $BOOST_ZIP
+# }
+# if (-not ($BOOST_SOURCES | Test-Path)) {
+#     # Expand-Archive $BOOST_ZIP $BOOST_SOURCES
+#     & $SZ_CMD x $BOOST_ZIP -o"$CS_DEPS"
+#     Set-Location $BOOST_SOURCES
+#     ./bootstrap
+#     ./b2 --variant=release --toolset=msvc --with-filesystem --with-thread --with-serialization --with-system threading=multi link=shared runtime-link=shared $B2_ARCH 
+#     Set-Location $CS_ROOT
+# }
+# Copy-Item -Path "$BOOST_SOURCES\stage\lib\boost_filesystem*mt-*-1_82.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
+# Copy-Item -Path "$BOOST_SOURCES\stage\lib\boost_thread*mt-*-1_82.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
+# Copy-Item -Path "$BOOST_SOURCES\stage\lib\boost_serialization*mt-*-1_82.dll"-Destination "$CS_INSTALL/SoapySDR/bin/"
+# Copy-Item -Path "$BOOST_SOURCES\stage\lib\boost_system*mt-*-1_82.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
 
 
 $WXWIDGETS_ZIP="$CS_DEPS/wxWidgets-3.2.1.zip"

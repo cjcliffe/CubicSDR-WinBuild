@@ -141,30 +141,32 @@ Copy-Item -Path "$CS_INSTALL/libxml2/bin/*.dll" -Destination "$CS_INSTALL/SoapyS
 
 
 # Boost from Binaries
+$BOOST_TARGET="$CS_DEPS/boost_1_82_0"
+$BOOST_INCLUDE_DIR="$BOOST_TARGET"
 switch ($CS_BUILD_ARCH) {
     "x64" { 
         $BOOST_URL="https://sourceforge.net/projects/boost/files/boost-binaries/1.82.0/boost_1_82_0-msvc-14.3-64.exe/download"
         $BOOST_INSTALLER="$CS_DEPS/boost_1_82_0-msvc-14.3-64.exe"
+        $BOOST_LIB_DIR="$BOOST_TARGET/lib64-msvc-14.3"
+        $BOOST_LIB_SUFFIX="mt-x64-1_82.dll"
     }
     "Win32" { 
-        $BOOST_URL="https://sourceforge.net/projects/boost/files/boost-binaries/1.82.0/boost_1_82_0-msvc-14.1-32.exe/download"
-        $BOOST_INSTALLER="$CS_DEPS/boost_1_82_0-msvc-14.1-32.exe"
+        $BOOST_URL="https://sourceforge.net/projects/boost/files/boost-binaries/1.82.0/boost_1_82_0-msvc-14.3-32.exe/download"
+        $BOOST_INSTALLER="$CS_DEPS/boost_1_82_0-msvc-14.3-32.exe"
+        $BOOST_LIB_DIR="$BOOST_TARGET/lib32-msvc-14.3"
     }
 }
-$BOOST_TARGET="$CS_DEPS/boost_1_82_0"
-$BOOST_INCLUDE_DIR="$BOOST_TARGET"
-$BOOST_LIB_DIR="$BOOST_TARGET/lib64-msvc-14.3"
 if (-not ($BOOST_INSTALLER | Test-Path)) {
     Invoke-WebRequest -UserAgent "Wget" $BOOST_URL -OutFile $BOOST_INSTALLER
 }
-if (-not ($BOOST_INSTALLER | Test-Path)) {
+if (-not ($BOOST_TARGET | Test-Path)) {
     Write-Host "Starting Boost Install to $BOOST_TARGET.."
     Start-Process -FilePath "$BOOST_INSTALLER" -ArgumentList "/DIR=$BOOST_TARGET /SP- /SILENT /SUPRESSMSGBOXES" -Wait
 }
-Copy-Item -Path "$BOOST_LIB_DIR/boost_filesystem*mt-x64-1_82.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
-Copy-Item -Path "$BOOST_LIB_DIR/boost_thread*mt-x64-1_82.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
-Copy-Item -Path "$BOOST_LIB_DIR/boost_serialization*mt-x64-1_82.dll"-Destination "$CS_INSTALL/SoapySDR/bin/"
-Copy-Item -Path "$BOOST_LIB_DIR/boost_system*mt-x64-1_82.dll" -Destination "$CS_INSTALL/SoapySDR/bin/"
+Copy-Item -Path "$BOOST_LIB_DIR/boost_filesystem*$BOOST_LIB_SUFFIX" -Destination "$CS_INSTALL/SoapySDR/bin/"
+Copy-Item -Path "$BOOST_LIB_DIR/boost_thread*$BOOST_LIB_SUFFIX" -Destination "$CS_INSTALL/SoapySDR/bin/"
+Copy-Item -Path "$BOOST_LIB_DIR/boost_serialization*$BOOST_LIB_SUFFIX"-Destination "$CS_INSTALL/SoapySDR/bin/"
+Copy-Item -Path "$BOOST_LIB_DIR/boost_system*$BOOST_LIB_SUFFIX" -Destination "$CS_INSTALL/SoapySDR/bin/"
 
 
 # Boost from Sources

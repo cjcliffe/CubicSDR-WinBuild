@@ -1,7 +1,7 @@
 $HACKRF_SOURCES="$CS_SOURCES/hackrf"
 
 if (-not ($HACKRF_SOURCES | Test-Path)) {
-    git clone https://github.com/greatscottgadgets/hackrf $HACKRF_SOURCES    
+    git clone --depth 1 https://github.com/greatscottgadgets/hackrf $HACKRF_SOURCES    
 }
 
 $HACKRF_TARGET="$CS_TARGET/hackrf"
@@ -26,7 +26,7 @@ Copy-Item -Path "$HACKRF_INSTALL/bin/*.dll" -Destination "$CS_INSTALL/SoapySDR/b
 
 $SOAPY_HACKRF_SOURCES="$CS_SOURCES/SoapyHackRF"
 if (-not ($SOAPY_HACKRF_SOURCES | Test-Path)) {
-    git clone https://github.com/pothosware/SoapyHackRF $SOAPY_HACKRF_SOURCES
+    git clone --depth 1 https://github.com/pothosware/SoapyHackRF $SOAPY_HACKRF_SOURCES
 }
 
 $SOAPY_HACKRF_TARGET="$CS_TARGET/SoapyHackRF"

@@ -10,7 +10,7 @@ switch ($CS_BUILD_ARCH) {
 $LIBUSB_SOURCES="$CS_DEPS/libusb"
 $LIBUSB_PROJECT="$LIBUSB_SOURCES/msvc/libusb.sln"
 if (-not ($LIBUSB_SOURCES | Test-Path)) {
-    git clone https://github.com/libusb/libusb $LIBUSB_SOURCES
+    git clone --depth 1 https://github.com/libusb/libusb $LIBUSB_SOURCES
     msbuild $LIBUSB_PROJECT /property:Configuration=$CS_BUILD_TYPE /property:Platform=$CS_BUILD_ARCH
 }
 $LIBUSB_LIBRARIES="$CS_DEPS/libusb/build/v143/$CS_BUILD_ARCH/$CS_BUILD_TYPE/dll/libusb-1.0.lib"
@@ -72,7 +72,7 @@ switch ($CS_BUILD_ARCH) {
     "Win32" { $ICONV_BUILD_PATH="" }
 }
 if (-not ($ICONV_SOURCES | Test-Path)) {
-    git clone https://github.com/kiyolee/libiconv-win-build.git $ICONV_SOURCES
+    git clone --depth 1 -c advice.detachedHead=false -b v1.17 https://github.com/kiyolee/libiconv-win-build.git $ICONV_SOURCES
     msbuild $ICONV_PROJECT /property:Configuration=$CS_BUILD_TYPE /property:Platform=$CS_BUILD_ARCH   
 }
 $LIBICONV_INCLUDE_DIR="$ICONV_SOURCES/include"
@@ -83,7 +83,7 @@ Copy-Item -Path "$CS_DEPS/libiconv-win-build/build-VS2022/$ICONV_BUILD_PATH/$CS_
 $XZ_SOURCES="$CS_DEPS/xz"
 $XZ_PROJECT="$XZ_SOURCES/windows/VS2019/xz_win.sln"
 if (-not ($XZ_SOURCES | Test-Path)) {
-    git clone -c advice.detachedHead=false -b v5.2.5 https://git.tukaani.org/xz.git $XZ_SOURCES
+    git clone --depth 1 -c advice.detachedHead=false -b v5.2.5 https://git.tukaani.org/xz.git $XZ_SOURCES
     devenv /Upgrade $XZ_PROJECT
     msbuild $XZ_PROJECT /property:Configuration=$CS_BUILD_TYPE /property:Platform=$CS_BUILD_ARCH
 }
@@ -94,7 +94,7 @@ Copy-Item -Path "$CS_DEPS/xz/windows/vs2019/$CS_BUILD_TYPE/$CS_BUILD_ARCH/liblzm
 
 $ZLIB_SOURCES="$CS_SOURCES/zlib"
 if (-not ($ZLIB_SOURCES | Test-Path)) {
-    git clone https://github.com/madler/zlib $ZLIB_SOURCES
+    git clone --depth 1 -c advice.detachedHead=false -b v1.3.1 https://github.com/madler/zlib $ZLIB_SOURCES
 }
 $ZLIB_TARGET="$CS_TARGET/zlib"
 $ZLIB_INSTALL="$CS_INSTALL/zlib"
@@ -114,7 +114,7 @@ Copy-Item -Path "$CS_INSTALL/zlib/bin/*.dll" -Destination "$CS_INSTALL/SoapySDR/
 
 $LIBXML_SOURCES="$CS_SOURCES/libxml2"
 if (-not ($LIBXML_SOURCES | Test-Path)) {
-    git clone https://gitlab.gnome.org/GNOME/libxml2.git $LIBXML_SOURCES
+    git clone --depth 1 -c advice.detachedHead=false -b v2.12.4 https://gitlab.gnome.org/GNOME/libxml2.git $LIBXML_SOURCES
 }
 
 $LIBXML_TARGET="$CS_TARGET/libxml2"

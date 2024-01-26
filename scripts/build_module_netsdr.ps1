@@ -1,6 +1,6 @@
 $SOAPY_NETSDR_SOURCES="$CS_SOURCES/SoapyNetSDR"
 if (-not ($SOAPY_NETSDR_SOURCES | Test-Path)) {
-    git clone https://github.com/pothosware/SoapyNetSDR $SOAPY_NETSDR_SOURCES
+    git clone --depth 1 https://github.com/pothosware/SoapyNetSDR $SOAPY_NETSDR_SOURCES
 }
 
 $SOAPY_NETSDR_TARGET="$CS_TARGET/SoapyNetSDR"

@@ -1,6 +1,6 @@
 $AIRSPYHF_HOST_SOURCES="$CS_SOURCES/airspyhf"
 if (-not ($AIRSPYHF_HOST_SOURCES | Test-Path)) {
-    git clone https://github.com/airspy/airspyhf $AIRSPYHF_HOST_SOURCES
+    git clone --depth 1 https://github.com/airspy/airspyhf $AIRSPYHF_HOST_SOURCES
 }
 
 $AIRSPYHF_HOST_TARGET="$CS_TARGET/airspyhf"
@@ -22,7 +22,7 @@ Copy-Item -Path "$AIRSPYHF_HOST_INSTALL/bin/*.dll" -Destination "$CS_INSTALL/Soa
 
 $SOAPY_AIRSPYHF_SOURCES="$CS_SOURCES/SoapyAirspyHF"
 if (-not ($SOAPY_AIRSPYHF_SOURCES | Test-Path)) {
-    git clone https://github.com/pothosware/SoapyAirspyHF $SOAPY_AIRSPYHF_SOURCES
+    git clone --depth 1 https://github.com/pothosware/SoapyAirspyHF $SOAPY_AIRSPYHF_SOURCES
 }
 
 $SOAPY_AIRSPYHF_TARGET="$CS_TARGET/SoapyAirspyHF"

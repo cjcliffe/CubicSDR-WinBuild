@@ -1,6 +1,6 @@
 $SOAPY_AUDIO_SOURCES="$CS_SOURCES/SoapyAudio"
 if (-not ($SOAPY_AUDIO_SOURCES | Test-Path)) {
-    git clone https://github.com/pothosware/SoapyAudio $SOAPY_AUDIO_SOURCES
+    git clone --depth 1 https://github.com/pothosware/SoapyAudio $SOAPY_AUDIO_SOURCES
 }
 
 $SOAPY_AUDIO_TARGET="$CS_TARGET/SoapyAudio"

@@ -17,7 +17,7 @@ Write-Host "`tBuild Type: $CS_BUILD_TYPE"
 Write-Host "`tBuild Arch: $CS_BUILD_ARCH"
 Write-Host "`tGenerator: $CS_GENERATOR"
 
-
+Set-PSDebug -Trace 1
 
 # Initialize build paths
 . .\scripts\init_paths.ps1

@@ -1,7 +1,7 @@
 
 $SOAPY_REDPITAYA_SOURCES="$CS_SOURCES/SoapyRedPitaya"
 if (-not ($SOAPY_REDPITAYA_SOURCES | Test-Path)) {
-    git clone https://github.com/pothosware/SoapyRedPitaya $SOAPY_REDPITAYA_SOURCES
+    git clone --depth 1 https://github.com/pothosware/SoapyRedPitaya $SOAPY_REDPITAYA_SOURCES
 }
 
 

@@ -1,6 +1,6 @@
 $SOAPY_SDRPLAY_SOURCES="$CS_SOURCES/SoapySDRPlay3"
 if (-not ($SOAPY_SDRPLAY_SOURCES | Test-Path)) {
-    git clone https://github.com/pothosware/SoapySDRPlay3 $SOAPY_SDRPLAY_SOURCES
+    git clone --depth 1 https://github.com/pothosware/SoapySDRPlay3 $SOAPY_SDRPLAY_SOURCES
 }
 
 $SOAPY_SDRPLAY_TARGET="$CS_TARGET/SoapySDRPlay3"

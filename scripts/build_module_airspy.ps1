@@ -1,6 +1,6 @@
 $AIRSPYONE_HOST_SOURCES="$CS_SOURCES/airspyone_host"
 if (-not ($AIRSPYONE_HOST_SOURCES | Test-Path)) {
-    git clone https://github.com/airspy/airspyone_host $AIRSPYONE_HOST_SOURCES
+    git clone --depth 1 https://github.com/airspy/airspyone_host $AIRSPYONE_HOST_SOURCES
 }
 
 $AIRSPYONE_HOST_TARGET="$CS_TARGET/airspyone_host"
@@ -22,7 +22,7 @@ Copy-Item -Path "$AIRSPYONE_HOST_INSTALL/bin/*.dll" -Destination "$CS_INSTALL/So
 
 $SOAPYAIRSPY_SOURCES="$CS_SOURCES/SoapyAirspy"
 if (-not ($SOAPYAIRSPY_SOURCES | Test-Path)) {
-    git clone https://github.com/pothosware/SoapyAirspy $SOAPYAIRSPY_SOURCES
+    git clone --depth 1 https://github.com/pothosware/SoapyAirspy $SOAPYAIRSPY_SOURCES
 }
 
 

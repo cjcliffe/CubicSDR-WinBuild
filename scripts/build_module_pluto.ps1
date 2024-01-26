@@ -1,6 +1,6 @@
 $LIBIIO_SOURCES="$CS_SOURCES/libiio"
 if (-not ($LIBIIO_SOURCES | Test-Path)) {
-    git clone https://github.com/analogdevicesinc/libiio $LIBIIO_SOURCES
+    git clone --depth 1 -c advice.detachedHead=false -b v0.25 https://github.com/analogdevicesinc/libiio --depth 1 $LIBIIO_SOURCES
 }
 
 $LIBIIO_TARGET="$CS_TARGET/libiio"
@@ -11,8 +11,6 @@ if (-not ($LIBIIO_TARGET | Test-Path)) {
         -DCMAKE_INSTALL_PREFIX="$LIBIIO_INSTALL" `
         -DLIBUSB_INCLUDE_DIR:PATH="$LIBUSB_INCLUDE_DIR" `
         -DLIBUSB_LIBRARIES:PATH="$LIBUSB_LIBRARIES" `
-        -DIconv_INCLUDE_DIR:PATH="$LIBICONV_INCLUDE_DIR" `
-        -DIconv_LIBRARY:FILEPATH="$LIBICONV_LIBRARY" `
         -DLIBXML2_LIBRARY:FILEPATH="$LIBXML2_LIBRARY" `
         -DLIBXML2_INCLUDE_DIR:PATH="$LIBXML2_INCLUDE_DIR"
         
@@ -25,7 +23,7 @@ Copy-Item -Path "$LIBIIO_INSTALL/bin/*.dll" -Destination "$CS_INSTALL/SoapySDR/b
 
 $LIBAD_SOURCES="$CS_SOURCES/libad9361-iio"
 if (-not ($LIBAD_SOURCES | Test-Path)) {
-    git clone https://github.com/analogdevicesinc/libad9361-iio $LIBAD_SOURCES
+    git clone --depth 1 https://github.com/analogdevicesinc/libad9361-iio $LIBAD_SOURCES
 }
 
 $LIBAD_TARGET="$CS_TARGET/libad9361-iio"
@@ -45,7 +43,7 @@ Copy-Item -Path "$LIBAD_INSTALL/bin/*.dll" -Destination "$CS_INSTALL/SoapySDR/bi
 
 $SOAPY_PLUTOSDR_SOURCES="$CS_SOURCES/SoapyPlutoSDR"
 if (-not ($SOAPY_PLUTOSDR_SOURCES | Test-Path)) {
-    git clone https://github.com/pothosware/SoapyPlutoSDR $SOAPY_PLUTOSDR_SOURCES
+    git clone --depth 1 https://github.com/pothosware/SoapyPlutoSDR $SOAPY_PLUTOSDR_SOURCES
 }
 
 $SOAPY_PLUTOSDR_TARGET="$CS_TARGET/SoapyPlutoSDR"

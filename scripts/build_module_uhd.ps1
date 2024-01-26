@@ -1,6 +1,6 @@
 $UHD_SOURCES="$CS_SOURCES/uhd"
 if (-not ($UHD_SOURCES | Test-Path)) {
-    git clone https://github.com/EttusResearch/uhd.git $UHD_SOURCES
+    git clone --depth 1 -c advice.detachedHead=false -b v4.6.0.0 https://github.com/EttusResearch/uhd.git $UHD_SOURCES
 }
 
 $UHD_TARGET="$CS_TARGET/uhd"
@@ -28,7 +28,7 @@ Copy-Item -Path "$UHD_INSTALL/bin/*.dll" -Destination "$CS_INSTALL/SoapySDR/bin/
 
 $SOAPY_UHD_SOURCES="$CS_SOURCES/SoapyUHD"
 if (-not ($SOAPY_UHD_SOURCES | Test-Path)) {
-    git clone https://github.com/pothosware/SoapyUHD $SOAPY_UHD_SOURCES
+    git clone --depth 1 https://github.com/pothosware/SoapyUHD $SOAPY_UHD_SOURCES
 }
 
 $SOAPY_UHD_TARGET="$CS_TARGET/SoapyUHD"

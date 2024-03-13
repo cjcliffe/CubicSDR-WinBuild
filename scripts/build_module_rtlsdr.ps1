@@ -2,7 +2,7 @@ $RTLSDR_SOURCES="$CS_SOURCES/librtlsdr"
 if (-not ($RTLSDR_SOURCES | Test-Path)) {
     # git clone --depth 1 https://github.com/librtlsdr/librtlsdr $RTLSDR_SOURCES    
     # git clone --depth 1 https://github.com/steve-m/librtlsdr $RTLSDR_SOURCES
-    git clone --depth 1 https://github.com/rtlsdrblog/rtl-sdr-blog-minimal $RTLSDR_SOURCES
+    git clone --depth 1 https://github.com/rtlsdrblog/rtl-sdr-blog $RTLSDR_SOURCES
 }
 
 $RTLSDR_TARGET="$CS_TARGET/librtlsdr"

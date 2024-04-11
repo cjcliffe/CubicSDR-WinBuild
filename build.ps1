@@ -39,6 +39,7 @@ Set-PSDebug -Trace 1
 . .\scripts\build_module_rtlsdr.ps1
 . .\scripts\build_module_sdrplay.ps1
 . .\scripts\build_module_uhd.ps1
+. .\scripts\build_module_limesuite.ps1
 
 # @REM call scripts\build_module_bladerf
 
